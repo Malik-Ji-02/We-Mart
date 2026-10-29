@@ -27,7 +27,7 @@ export function UnavailableScreen() {
         <small>DELIVERY AREA CHECK</small>
         <h1>We’re not in your area yet</h1>
         <p>
-          ApnaMarket currently delivers only in selected areas of Haryana. We’re
+          ApnaMarket currently delivers only in selected areas of Koramangala, Bengaluru. We’re
           working to reach more neighbourhoods soon.
         </p>
         <div className="checked-location">

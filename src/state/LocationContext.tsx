@@ -69,16 +69,16 @@ export function LocationProvider({ children }: { children: React.ReactNode }) {
     setServiceStatus("checking")
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
-        const isInHaryana = isCoordinateInServiceArea(
+        const isInServiceArea = isCoordinateInServiceArea(
           coords.latitude,
           coords.longitude,
         )
         setLocationName(
-          isInHaryana
-            ? "Current location · Haryana"
-            : "Current location · Outside Haryana",
+          isInServiceArea
+            ? "Current location · Koramangala, Bengaluru"
+            : "Current location · Outside Koramangala",
         )
-        setServiceStatus(isInHaryana ? "available" : "unavailable")
+        setServiceStatus(isInServiceArea ? "available" : "unavailable")
         setIsLocationGateOpen(false)
       },
       () => {

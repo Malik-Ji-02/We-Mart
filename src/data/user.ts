@@ -10,17 +10,17 @@ export const currentUser: User = {
 export const savedAddresses: Address[] = [
   {
     label: "Home",
-    address: "Sector 43, Gurugram, Haryana",
+    address: "5th Block, Koramangala, Bengaluru",
     available: true,
   },
   {
     label: "Parents’ home",
-    address: "Sector 15, Faridabad, Haryana",
+    address: "3rd Block, Koramangala, Bengaluru",
     available: true,
   },
   {
     label: "Work",
-    address: "Connaught Place, New Delhi",
+    address: "Whitefield, Bengaluru",
     available: false,
   },
 ]

@@ -1,9 +1,6 @@
 /**
  * Service Area Configuration
- *
- * NOTE: The service area check is currently configured for Haryana, while the demo
- * shop data is located in Koramangala, Bengaluru. The launch city configuration will
- * unify these in a subsequent phase.
+ * Launch area: Koramangala, Bengaluru
  */
 
 export interface ServiceAreaBounds {
@@ -14,18 +11,19 @@ export interface ServiceAreaBounds {
   maxLng: number
 }
 
-export const HARYANA_SERVICE_AREA: ServiceAreaBounds = {
-  name: "Haryana",
-  minLat: 27.65,
-  maxLat: 30.92,
-  minLng: 74.45,
-  maxLng: 77.6,
+// MOCK approximate bounds for Koramangala, Bengaluru launch area
+export const KORAMANGALA_SERVICE_AREA: ServiceAreaBounds = {
+  name: "Koramangala, Bengaluru",
+  minLat: 12.915,
+  maxLat: 12.955,
+  minLng: 77.605,
+  maxLng: 77.645,
 }
 
 export function isCoordinateInServiceArea(
   lat: number,
   lng: number,
-  area: ServiceAreaBounds = HARYANA_SERVICE_AREA,
+  area: ServiceAreaBounds = KORAMANGALA_SERVICE_AREA,
 ): boolean {
   return (
     lat >= area.minLat &&
@@ -34,3 +32,4 @@ export function isCoordinateInServiceArea(
     lng <= area.maxLng
   )
 }
+

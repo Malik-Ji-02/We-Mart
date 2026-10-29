@@ -48,7 +48,7 @@ export function AccountScreen() {
           <Icon name="pin" />
           <span>
             <strong>Saved addresses</strong>
-            <small>Home · Gurugram, Haryana</small>
+            <small>Home · 5th Block, Koramangala</small>
           </span>
           <Icon name="chevron" />
         </button>

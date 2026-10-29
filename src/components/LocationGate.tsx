@@ -103,7 +103,7 @@ export function LocationGate() {
         </div>
         <p className="coverage-copy">
           <Icon name="shield" size={16} />
-          Currently delivering across selected areas in Haryana.
+          Currently delivering across selected areas in Koramangala, Bengaluru.
         </p>
       </section>
     </div>

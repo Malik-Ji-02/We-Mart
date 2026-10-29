@@ -14,8 +14,8 @@ export const shops: Shop[] = [
       "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=900&q=82",
     offer: "₹50 OFF above ₹399",
     phone: "+91 98765 43210",
-    lat: 12.9346,
-    lng: 77.6195,
+    lat: 12.9346, // MOCK approximate coordinates
+    lng: 77.6195, // MOCK approximate coordinates
     address: "5th Block, Koramangala, Bengaluru",
     opensAt: "07:00",
     closesAt: "22:30",
@@ -33,8 +33,8 @@ export const shops: Shop[] = [
       "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=900&q=82",
     offer: "15% OFF on fresh produce",
     phone: "+91 98765 43211",
-    lat: 12.9381,
-    lng: 77.6243,
+    lat: 12.9381, // MOCK approximate coordinates
+    lng: 77.6243, // MOCK approximate coordinates
     address: "6th Block, Koramangala, Bengaluru",
     opensAt: "06:30",
     closesAt: "21:30",
@@ -52,8 +52,8 @@ export const shops: Shop[] = [
       "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=900&q=82",
     offer: "Free delivery above ₹299",
     phone: "+91 98765 43212",
-    lat: 12.9298,
-    lng: 77.6268,
+    lat: 12.9298, // MOCK approximate coordinates
+    lng: 77.6268, // MOCK approximate coordinates
     address: "4th Block, Koramangala, Bengaluru",
     opensAt: "08:00",
     closesAt: "22:00",
