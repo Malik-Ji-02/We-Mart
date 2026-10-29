@@ -5,7 +5,7 @@ type Page = "home" | "categories" | "shops" | "shop" | "search" | "product" | "s
 type IconName = "home" | "grid" | "store" | "bag" | "user" | "pin" | "chevron" | "search" | "mic" | "clock" | "star" | "shield" | "heart" | "plus" | "minus" | "arrow" | "filter" | "sort" | "back" | "phone" | "help" | "check" | "card" | "cash" | "upi" | "bell" | "list" | "spark" | "close"
 type ServiceStatus = "prompt" | "checking" | "available" | "unavailable"
 
-function Icon({ name, size = 20 }: { name: IconName size?: number }) {
+function Icon({ name, size = 20 }: { name: IconName; size?: number }) {
   const paths: Record<IconName, React.ReactNode> = {
     home: (
       <>
@@ -1908,7 +1908,7 @@ function BottomNav({
   navigate: (page: Page) => void
   count: number
 }) {
-  const items: { icon: IconName page: Page label: string }[] = [
+  const items: { icon: IconName; page: Page; label: string }[] = [
     { icon: "home", page: "home", label: "Home" },
     { icon: "grid", page: "categories", label: "Categories" },
     { icon: "spark", page: "smart", label: "Smart Basket" },
