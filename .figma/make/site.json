@@ -1,0 +1,10 @@
+{
+  "description": "Connects Indian shoppers with local stores and helps retailers, distributors, and manufacturers manage products, orders, and sales in one commerce platform.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
