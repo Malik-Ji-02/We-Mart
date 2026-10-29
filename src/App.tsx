@@ -6,7 +6,6 @@ import {
   useLocation as useRouterLocation,
   useNavigate,
 } from "react-router-dom"
-import { Icon } from "./icons/Icon"
 import { ErrorBoundary } from "./components/ErrorBoundary"
 import { LocationProvider, useLocation } from "./state/LocationContext"
 import { CartProvider, useCart } from "./state/CartContext"
@@ -14,12 +13,11 @@ import { OrderProvider } from "./state/OrderContext"
 import { UIProvider } from "./state/UIContext"
 
 import { AppHeader } from "./components/AppHeader"
-import { BottomNav } from "./components/BottomNav"
-import { CartBar } from "./components/CartBar"
-import { AssistantFab } from "./components/AssistantFab"
+import { BottomStack } from "./components/BottomStack"
 import { AssistantSheet } from "./components/AssistantSheet"
 import { LocationGate } from "./components/LocationGate"
 import { ComingSoonSheet } from "./components/ComingSoonSheet"
+import { Toast } from "./components/ui/Toast"
 
 import { HomeScreen } from "./screens/HomeScreen"
 import { CategoriesScreen } from "./screens/CategoriesScreen"
@@ -33,6 +31,7 @@ import { CheckoutScreen } from "./screens/CheckoutScreen"
 import { TrackingScreen } from "./screens/TrackingScreen"
 import { AccountScreen } from "./screens/AccountScreen"
 import { UnavailableScreen } from "./screens/UnavailableScreen"
+import { DesignSystemGallery } from "./screens/DesignSystemGallery"
 
 function ScrollToTop() {
   const { pathname } = useRouterLocation()
@@ -50,18 +49,21 @@ function AppShell() {
 
   const [searchQuery, setSearchQuery] = useState("")
 
-  const hiddenBottomNavRoutes = ["/checkout"]
-  const hideBottomNav =
-    hiddenBottomNavRoutes.includes(routerLocation.pathname) ||
-    routerLocation.pathname.startsWith("/product/") ||
-    routerLocation.pathname.startsWith("/shops/") ||
-    routerLocation.pathname.startsWith("/tracking")
+  const isDesignSystemRoute = routerLocation.pathname === "/design-system"
 
-  if (serviceStatus === "unavailable") {
+  if (serviceStatus === "unavailable" && !isDesignSystemRoute) {
     return (
       <div className="app-shell">
         <UnavailableScreen />
       </div>
+    )
+  }
+
+  if (isDesignSystemRoute) {
+    return (
+      <main>
+        <DesignSystemGallery />
+      </main>
     )
   }
 
@@ -89,23 +91,19 @@ function AppShell() {
           <Route path="/tracking" element={<TrackingScreen />} />
           <Route path="/tracking/:orderId" element={<TrackingScreen />} />
           <Route path="/account" element={<AccountScreen />} />
+          {import.meta.env.DEV && (
+            <Route path="/design-system" element={<DesignSystemGallery />} />
+          )}
         </Routes>
       </main>
 
-      <CartBar />
-      {!hideBottomNav && <BottomNav />}
-      <AssistantFab />
+      <BottomStack />
 
       <AssistantSheet />
       <LocationGate />
       <ComingSoonSheet />
 
-      {toast && (
-        <div className="toast">
-          <Icon name="check" size={18} />
-          {toast}
-        </div>
-      )}
+      {toast && <Toast message={toast} />}
     </div>
   )
 }

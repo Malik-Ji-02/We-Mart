@@ -1,4 +1,5 @@
 import { Shop } from "../types"
+import { Icon } from "../icons/Icon"
 
 interface ShopMapProps {
   shop: Shop
@@ -13,17 +14,7 @@ export function ShopMap({ shop }: ShopMapProps) {
     <section className="shop-location-card" aria-label={`Location of ${name}`}>
       <div className="shop-location-heading">
         <span className="location-pin" aria-hidden="true">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.7"
-          >
-            <path d="M19 10c0 6-7 11-7 11S5 16 5 10a7 7 0 1 1 14 0Z" />
-            <circle cx="12" cy="10" r="2" />
-          </svg>
+          <Icon name="pin" size={20} />
         </span>
         <div>
           <h3>Find us in your neighbourhood</h3>

@@ -1,7 +1,26 @@
 import React from "react"
 import { IconName } from "../types"
 
-export function Icon({ name, size = 20 }: { name: IconName; size?: number }) {
+export interface IconProps {
+  name: IconName
+  size?: number
+  className?: string
+  filled?: boolean
+  "aria-label"?: string
+  "aria-hidden"?: boolean | "true" | "false"
+}
+
+export function Icon({
+  name,
+  size = 20,
+  className,
+  filled = false,
+  "aria-label": ariaLabel,
+  "aria-hidden": ariaHidden,
+}: IconProps) {
+  const isAccessible = Boolean(ariaLabel)
+  const resolvedAriaHidden = ariaHidden !== undefined ? ariaHidden : isAccessible ? undefined : true
+
   const paths: Record<IconName, React.ReactNode> = {
     home: (
       <>
@@ -61,7 +80,7 @@ export function Icon({ name, size = 20 }: { name: IconName; size?: number }) {
       </>
     ),
     star: (
-      <path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z" />
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
     ),
     shield: (
       <>
@@ -118,17 +137,21 @@ export function Icon({ name, size = 20 }: { name: IconName; size?: number }) {
     ),
     close: <path d="m6 6 12 12M18 6 6 18" />,
   }
+
   return (
     <svg
       width={size}
       height={size}
       viewBox="0 0 24 24"
-      fill="none"
+      fill={filled ? "currentColor" : "none"}
       stroke="currentColor"
-      strokeWidth="1.7"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
-      aria-hidden="true"
+      className={className}
+      aria-label={ariaLabel}
+      aria-hidden={resolvedAriaHidden}
+      role={isAccessible ? "img" : undefined}
     >
       {paths[name]}
     </svg>
