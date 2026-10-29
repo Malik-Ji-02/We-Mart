@@ -277,11 +277,11 @@ main {
 
 /* Home Screen Redesign (Phase 3) */
 .home-search-section {
-  padding: var(--sp-3) var(--sp-4) var(--sp-1);
+  padding: var(--sp-2) var(--sp-4) var(--sp-1);
 }
 
 .home-category-shortcuts {
-  padding: var(--sp-2) 0;
+  padding: var(--sp-1) 0;
   overflow: hidden;
 }
 
@@ -307,13 +307,13 @@ main {
   cursor: pointer;
   padding: var(--sp-1) 0;
   scroll-snap-align: start;
-  min-height: 64px;
+  min-height: 60px;
 }
 
 .category-shortcut-icon {
-  width: 52px;
-  height: 52px;
-  min-width: 52px;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
   border-radius: var(--r-md);
   background: var(--surface);
   overflow: hidden;
@@ -342,14 +342,14 @@ main {
 }
 
 .home-promo-section {
-  padding: var(--sp-2) var(--sp-4);
+  padding: var(--sp-1) var(--sp-4);
 }
 
 .home-slim-promo {
   max-height: 128px;
-  min-height: 80px;
-  padding: var(--sp-3) var(--sp-4);
-  border-radius: var(--r-lg);
+  min-height: 56px;
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--r-md);
   background: var(--primary);
   color: var(--on-primary);
   display: flex;
@@ -630,9 +630,17 @@ main {
 }
 
 .shop-card.compact {
-  min-width: 274px;
-  width: 274px;
+  min-width: 250px;
+  width: 250px;
   scroll-snap-align: start;
+}
+
+.shop-card.compact .shop-photo {
+  height: 96px;
+}
+
+.shop-card.compact .shop-copy {
+  padding: var(--sp-2) var(--sp-3);
 }
 
 .shop-card.is-closed {

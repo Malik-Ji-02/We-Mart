@@ -7,14 +7,10 @@ import { IconButton } from "./ui/IconButton"
 
 interface AppHeaderProps {
   title?: string
-  searchQuery?: string
-  onSearchChange?: (query: string) => void
 }
 
 export function AppHeader({
   title,
-  searchQuery = "",
-  onSearchChange,
 }: AppHeaderProps) {
   const routerLocation = useLocation()
   const navigate = useNavigate()
@@ -102,21 +98,6 @@ export function AppHeader({
             </IconButton>
           )}
         </div>
-      )}
-
-      {isSearch && (
-        <label className="search-bar">
-          <Icon name="search" />
-          <input
-            value={searchQuery}
-            onChange={(e) => onSearchChange?.(e.target.value)}
-            placeholder="Search milk, atta or a local shop"
-            autoFocus
-          />
-          <span aria-hidden="true" style={{ display: "grid", placeItems: "center" }}>
-            <Icon name="mic" />
-          </span>
-        </label>
       )}
     </header>
   )

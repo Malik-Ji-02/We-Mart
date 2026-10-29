@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import {
   BrowserRouter,
   Routes,
   Route,
   useLocation as useRouterLocation,
-  useNavigate,
 } from "react-router-dom"
 import { ErrorBoundary } from "./components/ErrorBoundary"
 import { LocationProvider, useLocation } from "./state/LocationContext"
@@ -43,11 +42,8 @@ function ScrollToTop() {
 
 function AppShell() {
   const routerLocation = useRouterLocation()
-  const navigate = useNavigate()
   const { serviceStatus } = useLocation()
   const { toast } = useCart()
-
-  const [searchQuery, setSearchQuery] = useState("")
 
   const isDesignSystemRoute = routerLocation.pathname === "/design-system"
 
@@ -69,13 +65,7 @@ function AppShell() {
 
   return (
     <div className="app-shell">
-      <AppHeader
-        searchQuery={searchQuery}
-        onSearchChange={(q) => {
-          setSearchQuery(q)
-          navigate(`/search?q=${encodeURIComponent(q)}`)
-        }}
-      />
+      <AppHeader />
 
       <main>
         <Routes>
