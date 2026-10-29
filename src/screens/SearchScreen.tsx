@@ -4,6 +4,7 @@ import { Icon } from "../icons/Icon"
 import { ProductCard } from "../components/ProductCard"
 import { ShopCard } from "../components/ShopCard"
 import { SectionTitle } from "../components/SectionTitle"
+import { Chip, EmptyState } from "../components/ui"
 import { useCart } from "../state/CartContext"
 import { getProducts } from "../data/products"
 import { getShops } from "../data/shops"
@@ -70,63 +71,64 @@ export function SearchScreen() {
   }, [allShops, query, under30Only, offersOnly])
 
   const hasResults = resultProducts.length > 0 || resultShops.length > 0
+  const hasAnyFilter = under30Only || offersOnly || sortOrder !== "none"
 
   return (
     <>
       <div className="filter-chips">
-        <button
-          className={under30Only || offersOnly || sortOrder !== "none" ? "active" : ""}
+        <Chip
+          active={hasAnyFilter}
           onClick={() => {
             setUnder30Only(false)
             setOffersOnly(false)
             setSortOrder("none")
           }}
+          icon={<Icon name="filter" size={16} />}
           aria-label="Toggle all filters"
         >
-          <Icon name="filter" size={16} />
           Filters
-        </button>
-        <button
-          className={sortOrder !== "none" ? "active" : ""}
+        </Chip>
+        <Chip
+          active={sortOrder !== "none"}
           onClick={() =>
             setSortOrder((prev) => (prev === "none" ? "asc" : prev === "asc" ? "desc" : "none"))
           }
+          icon={<Icon name="sort" size={16} />}
           aria-label="Toggle sort order"
         >
-          <Icon name="sort" size={16} />
           {sortOrder === "asc"
             ? "Price: Low to High"
             : sortOrder === "desc"
               ? "Price: High to Low"
               : "Sort"}
-        </button>
-        <button
-          className={under30Only ? "active" : ""}
+        </Chip>
+        <Chip
+          active={under30Only}
           onClick={() => setUnder30Only((prev) => !prev)}
           aria-label="Filter results under 30 minutes"
         >
           Under 30 min
-        </button>
-        <button
-          className={offersOnly ? "active" : ""}
+        </Chip>
+        <Chip
+          active={offersOnly}
           onClick={() => setOffersOnly((prev) => !prev)}
           aria-label="Filter results with offers"
         >
           Offers
-        </button>
+        </Chip>
       </div>
 
       {!query && (
         <div className="recent-searches">
           <SectionTitle title="Recent searches" />
-          <button onClick={() => handleRecentSearch("Milk")}>
-            Milk <Icon name="chevron" size={14} />
+          <button type="button" onClick={() => handleRecentSearch("Milk")}>
+            <span>Milk</span> <Icon name="chevron" size={14} />
           </button>
-          <button onClick={() => handleRecentSearch("Fresh Basket")}>
-            Fresh Basket <Icon name="chevron" size={14} />
+          <button type="button" onClick={() => handleRecentSearch("Fresh Basket")}>
+            <span>Fresh Basket</span> <Icon name="chevron" size={14} />
           </button>
-          <button onClick={() => handleRecentSearch("Atta 5 kg")}>
-            Atta 5 kg <Icon name="chevron" size={14} />
+          <button type="button" onClick={() => handleRecentSearch("Atta 5 kg")}>
+            <span>Atta 5 kg</span> <Icon name="chevron" size={14} />
           </button>
         </div>
       )}
@@ -168,13 +170,11 @@ export function SearchScreen() {
         </>
       ) : (
         query && (
-          <div className="empty-state">
-            <span>
-              <Icon name="search" size={30} />
-            </span>
-            <h2>No matches nearby</h2>
-            <p>Try a product, category, or shop name.</p>
-          </div>
+          <EmptyState
+            icon={<Icon name="search" size={32} />}
+            title="No matches nearby"
+            body="Try a product, category, or shop name."
+          />
         )
       )}
     </>

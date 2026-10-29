@@ -9,6 +9,7 @@ export function LocationGate() {
     isLocationGateOpen,
     useCurrentLocation,
     chooseSavedLocation,
+    closeLocationGate,
   } = useLocation()
 
   const savedAddresses = getSavedAddresses()
@@ -20,8 +21,14 @@ export function LocationGate() {
 
   if (!shouldShow) return null
 
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget && isLocationGateOpen && serviceStatus !== "prompt") {
+      closeLocationGate()
+    }
+  }
+
   return (
-    <div className="location-backdrop">
+    <div className="location-backdrop" onClick={handleBackdropClick}>
       <section
         className="location-sheet"
         role="dialog"

@@ -4,6 +4,7 @@ import { Icon } from "../icons/Icon"
 import { ProductCard } from "../components/ProductCard"
 import { SectionTitle } from "../components/SectionTitle"
 import { ShopMap } from "../components/ShopMap"
+import { Badge, Rating, Chip } from "../components/ui"
 import { useCart } from "../state/CartContext"
 import { getShopById, getShops } from "../data/shops"
 import { getProductsByShop } from "../data/products"
@@ -36,27 +37,23 @@ export function ShopDetailsScreen() {
         <div>
           <div className="shop-name">
             <h2>{shop.name}</h2>
-            <span>
-              <Icon name="shield" size={13} /> Verified
-            </span>
+            <Badge variant="verified">Verified</Badge>
           </div>
           <p>{shop.type}</p>
           <div className="shop-hero-meta">
+            <Rating rating={shop.rating} />
             <span>
-              <Icon name="star" size={13} />
-              {shop.rating}
-            </span>
-            <span>
-              <Icon name="clock" size={13} />
+              <Icon name="clock" size={14} aria-hidden="true" />
               {shop.eta}
             </span>
             <span>{shop.distance}</span>
           </div>
           <button
+            type="button"
             onClick={() => setShowMap((prev) => !prev)}
             aria-label={showMap ? "Hide shop map" : "Show shop map"}
           >
-            <Icon name="pin" size={16} />
+            <Icon name="pin" size={16} aria-hidden="true" />
             {showMap ? "Hide location" : "Shop information"}
           </button>
         </div>
@@ -69,16 +66,17 @@ export function ShopDetailsScreen() {
         <span>Minimum order ₹{shop.min}</span>
       </div>
 
-      <div className="category-tabs">
+      <div className="category-tabs" role="tablist" aria-label="Product categories">
         {categories.map((cat) => (
-          <button
+          <Chip
             key={cat}
-            className={selectedCategory === cat ? "active" : ""}
+            active={selectedCategory === cat}
             onClick={() => setSelectedCategory(cat)}
             aria-label={`Filter by ${cat}`}
+            role="tab"
           >
             {cat}
-          </button>
+          </Chip>
         ))}
       </div>
 
@@ -97,7 +95,7 @@ export function ShopDetailsScreen() {
               />
             ))
           ) : (
-            <p style={{ gridColumn: "1 / -1", color: "var(--text-2)", padding: "16px 0" }}>
+            <p style={{ gridColumn: "1 / -1", color: "var(--text-2)", padding: "var(--sp-4) 0" }}>
               No products available in this category for {shop.name}.
             </p>
           )}

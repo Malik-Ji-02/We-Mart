@@ -1,6 +1,6 @@
-import React from "react"
-import { Icon } from "../icons/Icon"
 import { useUI } from "../state/UIContext"
+import { Sheet } from "./ui/Sheet"
+import { Button } from "./ui/Button"
 
 export function ComingSoonSheet() {
   const { comingSoon, closeComingSoon } = useUI()
@@ -8,39 +8,24 @@ export function ComingSoonSheet() {
   if (!comingSoon) return null
 
   return (
-    <div className="assistant-backdrop" onClick={closeComingSoon}>
-      <section
-        className="assistant-sheet"
-        onClick={(event) => event.stopPropagation()}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="coming-soon-title"
+    <Sheet
+      isOpen={Boolean(comingSoon)}
+      onClose={closeComingSoon}
+      title={comingSoon.title}
+    >
+      <div className="assistant-message" style={{ margin: "var(--sp-4) 0" }}>
+        <p>{comingSoon.message}</p>
+      </div>
+      <Button
+        variant="primary"
+        fullWidth
+        size="md"
+        onClick={closeComingSoon}
+        style={{ marginTop: "var(--sp-4)" }}
       >
-        <div className="sheet-handle" />
-        <div className="assistant-heading">
-          <span>
-            <Icon name="spark" size={22} />
-          </span>
-          <div>
-            <h2 id="coming-soon-title">{comingSoon.title}</h2>
-            <p>Coming soon</p>
-          </div>
-          <button aria-label="Close" onClick={closeComingSoon}>
-            <Icon name="close" />
-          </button>
-        </div>
-        <div className="assistant-message" style={{ margin: "20px 0" }}>
-          <p>{comingSoon.message}</p>
-        </div>
-        <button
-          className="compare-button"
-          onClick={closeComingSoon}
-          style={{ marginTop: "16px" }}
-        >
-          Got it
-        </button>
-      </section>
-    </div>
+        Got it
+      </Button>
+    </Sheet>
   )
 }
 

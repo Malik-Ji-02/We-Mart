@@ -2,6 +2,7 @@ import { useState, useMemo } from "react"
 import { useNavigate } from "react-router-dom"
 import { Icon } from "../icons/Icon"
 import { ShopCard } from "../components/ShopCard"
+import { Chip, EmptyState } from "../components/ui"
 import { getShops } from "../data/shops"
 
 export function ShopsScreen() {
@@ -38,35 +39,35 @@ export function ShopsScreen() {
   return (
     <>
       <div className="filter-chips">
-        <button
-          className={hasAnyFilter ? "active" : ""}
+        <Chip
+          active={hasAnyFilter}
           onClick={() => (hasAnyFilter ? resetFilters() : setUnder30Only(true))}
+          icon={<Icon name="filter" size={16} />}
           aria-label="Toggle all filters"
         >
-          <Icon name="filter" size={16} />
           {hasAnyFilter ? "Clear filters" : "Filters"}
-        </button>
-        <button
-          className={under30Only ? "active" : ""}
+        </Chip>
+        <Chip
+          active={under30Only}
           onClick={() => setUnder30Only((prev) => !prev)}
           aria-label="Filter shops under 30 minutes delivery"
         >
           Under 30 min
-        </button>
-        <button
-          className={freeDeliveryOnly ? "active" : ""}
+        </Chip>
+        <Chip
+          active={freeDeliveryOnly}
           onClick={() => setFreeDeliveryOnly((prev) => !prev)}
           aria-label="Filter shops with free delivery"
         >
           Free delivery
-        </button>
-        <button
-          className={topRatedOnly ? "active" : ""}
+        </Chip>
+        <Chip
+          active={topRatedOnly}
           onClick={() => setTopRatedOnly((prev) => !prev)}
           aria-label="Filter top rated shops"
         >
           Top rated
-        </button>
+        </Chip>
       </div>
 
       <div className="stacked-shops">
@@ -79,16 +80,13 @@ export function ShopsScreen() {
             />
           ))
         ) : (
-          <div className="empty-state">
-            <span>
-              <Icon name="store" size={30} />
-            </span>
-            <h2>No shops match these filters</h2>
-            <p>Try clearing your active filters to see all nearby shops.</p>
-            <button className="primary-button" onClick={resetFilters}>
-              Reset filters
-            </button>
-          </div>
+          <EmptyState
+            icon={<Icon name="store" size={32} />}
+            title="No shops match these filters"
+            body="Try clearing your active filters to see all nearby shops."
+            actionLabel="Reset filters"
+            onAction={resetFilters}
+          />
         )}
       </div>
     </>

@@ -1761,6 +1761,16 @@ main {
   display: grid;
   place-items: center;
   color: var(--on-primary);
+  position: relative;
+}
+
+.smart-check::after {
+  content: "";
+  position: absolute;
+  top: -11px;
+  bottom: -11px;
+  left: -11px;
+  right: -11px;
 }
 
 .smart-list-item.selected .smart-check {

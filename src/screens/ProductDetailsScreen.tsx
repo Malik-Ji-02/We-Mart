@@ -1,10 +1,12 @@
 import { useParams, useNavigate } from "react-router-dom"
 import { Icon } from "../icons/Icon"
 import { QuantityControl } from "../components/QuantityControl"
+import { Price, Rating } from "../components/ui"
 import { useCart } from "../state/CartContext"
 import { getProductById, getProducts } from "../data/products"
 import { getShopById, getShops } from "../data/shops"
 import { calculateDiscount, formatPrice } from "../lib/format"
+import { optimizeImageUrl } from "../components/ui/ProductImage"
 
 export function ProductDetailsScreen() {
   const { productId } = useParams<{ productId: string }>()
@@ -20,7 +22,10 @@ export function ProductDetailsScreen() {
   return (
     <div className="product-detail">
       <div className="detail-image">
-        <img src={product.image} alt={product.name} />
+        <img
+          src={optimizeImageUrl(product.image, 600)}
+          alt={product.name}
+        />
         {discount > 0 && <span>{discount}% OFF</span>}
       </div>
 
@@ -29,16 +34,16 @@ export function ProductDetailsScreen() {
         <h1>{product.name}</h1>
         <p>{product.unit}</p>
         <div className="detail-price">
-          <strong>{formatPrice(product.price)}</strong>
-          {product.mrp > product.price && <del>{formatPrice(product.mrp)}</del>}
+          <Price price={product.price} mrp={product.mrp} size="lg" />
           <span>Inclusive of all taxes</span>
         </div>
       </section>
 
       <button
+        type="button"
         className="seller-card"
         onClick={() => navigate(`/shops/${shop.id}`)}
-        aria-label={`View shop ${shop.name}`}
+        aria-label={`View shop ${shop.name}, rating ${shop.rating}, ETA ${shop.eta}`}
       >
         <span className="seller-logo" aria-hidden="true">
           <Icon name="store" />
@@ -47,7 +52,7 @@ export function ProductDetailsScreen() {
           <small>Sold by</small>
           <strong>{shop.name}</strong>
           <em>
-            <Icon name="star" size={12} /> {shop.rating} · {shop.eta}
+            <Rating rating={shop.rating} size={13} /> · {shop.eta}
           </em>
         </span>
         <Icon name="chevron" />
@@ -78,6 +83,7 @@ export function ProductDetailsScreen() {
           value={quantity}
           onAdd={() => addItem(product.id)}
           onRemove={() => removeItem(product.id)}
+          productName={product.name}
         />
       </div>
     </div>
