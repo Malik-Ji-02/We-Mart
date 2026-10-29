@@ -1,0 +1,96 @@
+:root {
+  /* Brand Color Tokens */
+  --primary: #0c831f;
+  --primary-dark: #086b18;
+  --primary-10: #e7f3e9;
+  --primary-20: #cfe7d2;
+
+  /* Text Colors */
+  --text: #1c1c1c;
+  --text-2: #666666;
+  --text-disabled: #9a9a9a; /* ONLY for disabled controls; never for readable text */
+
+  /* Surface & Border Colors */
+  --background: #ffffff;
+  --surface: #f5f5f5;
+  --border: #e8e8e8;
+  --border-strong: #d8d8d8;
+  --viewport-bg: #eeeeee; /* desktop backdrop only */
+
+  /* Functional Status Colors (WCAG AA Compliant) */
+  --success: #0e7a33;
+  --success-icon: #1fa84f;
+  --warning: #b45309;
+  --warning-bg: #f5a623;
+  --error: #d3232f;
+
+  /* Accent Tokens (Collapsed 6 stray yellow/brown values) */
+  --accent: #f8cb46;
+  --accent-soft: #fff8e1;
+  --on-accent: #4b3800; /* passes >= 4.5:1 on accent, accent-soft, and white */
+
+  /* On-Color Tokens */
+  --on-primary: #ffffff; /* text on --primary or --primary-dark */
+
+  /* TEMP: removed in Phase 4 (Fake tracking map only) */
+  --map-land: #e8ebe5;
+  --map-road: #d7dbd4;
+
+  /* Typography Scale */
+  --font: "Inter", "Noto Sans Devanagari", "Noto Sans Kannada", system-ui, -apple-system, sans-serif;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  --fs-caption: 12px;
+  --lh-caption: 16px;
+  --fs-label: 13px;
+  --lh-label: 18px;
+  --fs-body: 14px;
+  --lh-body: 20px;
+  --fs-heading: 16px;
+  --lh-heading: 24px;
+  --fs-title: 20px;
+  --lh-title: 28px;
+  --fs-display: 24px;
+  --lh-display: 32px;
+
+  /* Spacing Scale (4px grid) */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+
+  /* Radius Scale */
+  --r-xs: 4px;   /* tiny badges */
+  --r-sm: 8px;   /* inputs, small cards */
+  --r-md: 12px;  /* standard cards */
+  --r-lg: 16px;  /* sheets, large surfaces */
+  --r-pill: 999px;
+
+  /* Elevation */
+  --shadow-float: 0 4px 16px rgba(28, 28, 28, 0.12);
+
+  /* Layout & Z-Index Scale */
+  --app-max-w: 480px;
+  --nav-h: 64px;
+  --cart-bar-h: 56px;
+  --bottom-stack-h: 72px; /* dynamically updated */
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  --z-base: 0;
+  --z-sticky: 10;
+  --z-nav: 20;
+  --z-cart-bar: 30;
+  --z-fab: 40;
+  --z-sheet: 50;
+  --z-toast: 60;
+
+  /* Motion */
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+}
