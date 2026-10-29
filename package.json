@@ -11,7 +11,8 @@
     "lint": "eslint .",
     "format": "oxfmt",
     "check:tokens": "node scripts/check-tokens.mjs",
-    "check:contrast": "node scripts/check-contrast.mjs"
+    "check:contrast": "node scripts/check-contrast.mjs",
+    "check:tap-targets": "node scripts/check-tap-targets.mjs"
   },
   "dependencies": {
     "react": "^19.0.0",
