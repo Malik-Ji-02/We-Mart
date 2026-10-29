@@ -1,13 +1,22 @@
 import { useState, useMemo } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { Icon } from "../icons/Icon"
-import { ProductCard } from "../components/ProductCard"
-import { SectionTitle } from "../components/SectionTitle"
+import {
+  Badge,
+  Rating,
+  Chip,
+  Button,
+  IconButton,
+  Sheet,
+  EmptyState,
+  ProductCard,
+  ShopAvatar,
+} from "../components/ui"
 import { ShopMap } from "../components/ShopMap"
-import { Badge, Rating, Chip } from "../components/ui"
 import { useCart } from "../state/CartContext"
 import { getShopById, getShops } from "../data/shops"
 import { getProductsByShop } from "../data/products"
+import { isShopOpen, formatPrice } from "../lib/format"
 
 export function ShopDetailsScreen() {
   const { shopId } = useParams<{ shopId: string }>()
@@ -16,11 +25,12 @@ export function ShopDetailsScreen() {
 
   const shop = getShopById(shopId || "") || getShops()[0]
   const shopProducts = useMemo(() => getProductsByShop(shop.id), [shop.id])
+  const isOpen = isShopOpen(shop)
 
-  const [showMap, setShowMap] = useState(false)
+  const [directionsOpen, setDirectionsOpen] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState("All")
 
-  const categories = ["All", "Best sellers", "Dairy", "Staples"]
+  const categories = ["All", "Best sellers", "Dairy", "Staples", "Snacks"]
 
   const filteredProducts = useMemo(() => {
     if (selectedCategory === "All") return shopProducts
@@ -30,61 +40,122 @@ export function ShopDetailsScreen() {
     )
   }, [shopProducts, selectedCategory])
 
+  const freeDeliveryText =
+    shop.fee === 0
+      ? "Free delivery"
+      : shop.min
+      ? `Free delivery over ${formatPrice(shop.min)}`
+      : `${formatPrice(shop.fee)} delivery fee`
+
   return (
-    <>
-      <section className="shop-hero">
-        <img src={shop.image} alt={shop.name} />
-        <div>
-          <div className="shop-name">
-            <h2>{shop.name}</h2>
-            <Badge variant="verified">Verified</Badge>
+    <div className="shop-details-screen">
+      {/* Compact Header: back, ShopAvatar, name, verified badge, rating, distance, ETA, open hours, free-delivery, Call & Directions */}
+      <section className="shop-compact-header">
+        <div className="shop-compact-top">
+          <IconButton
+            aria-label="Go back"
+            onClick={() => navigate(-1)}
+            className="shop-back-btn"
+          >
+            <Icon name="back" />
+          </IconButton>
+          <ShopAvatar name={shop.name} size="lg" />
+          <div className="shop-compact-info">
+            <div className="shop-title-row">
+              <h1>{shop.name}</h1>
+              <Badge variant="verified">Verified</Badge>
+            </div>
+            <p className="shop-compact-type">{shop.type}</p>
+            <div className="shop-compact-meta">
+              <Rating rating={shop.rating} />
+              <span>·</span>
+              <span>{shop.distance}</span>
+              <span>·</span>
+              <span>{shop.eta}</span>
+            </div>
           </div>
-          <p>{shop.type}</p>
-          <div className="shop-hero-meta">
-            <Rating rating={shop.rating} />
-            <span>
-              <Icon name="clock" size={14} aria-hidden="true" />
-              {shop.eta}
-            </span>
-            <span>{shop.distance}</span>
+        </div>
+
+        <div className="shop-compact-details-row">
+          <Badge
+            variant={isOpen ? "open" : "closed"}
+            opensAt={shop.opensAt}
+          >
+            {isOpen ? `Open · Closes ${shop.closesAt}` : `Closed · Opens at ${shop.opensAt}`}
+          </Badge>
+          <span className="shop-threshold-text">{freeDeliveryText}</span>
+        </div>
+
+        {shop.offer && (
+          <div className="shop-offer-pill">
+            <Icon name="spark" size={14} aria-hidden="true" />
+            <span>{shop.offer}</span>
           </div>
-          <button
-            type="button"
-            onClick={() => setShowMap((prev) => !prev)}
-            aria-label={showMap ? "Hide shop map" : "Show shop map"}
+        )}
+
+        <div className="shop-header-actions">
+          <a
+            href={`tel:${shop.phone}`}
+            className="ui-btn ui-btn-sm ui-btn-secondary shop-action-link"
+            aria-label={`Call ${shop.name} at ${shop.phone}`}
+          >
+            <Icon name="phone" size={16} aria-hidden="true" />
+            <span>Call</span>
+          </a>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => setDirectionsOpen(true)}
+            aria-label={`View directions to ${shop.name}`}
+            className="shop-action-link"
           >
             <Icon name="pin" size={16} aria-hidden="true" />
-            {showMap ? "Hide location" : "Shop information"}
-          </button>
+            <span>Directions</span>
+          </Button>
         </div>
       </section>
 
-      {showMap && <ShopMap shop={shop} />}
+      {/* Directions Sheet with OpenStreetMap - only loaded when opened! */}
+      <Sheet
+        isOpen={directionsOpen}
+        onClose={() => setDirectionsOpen(false)}
+        title={`Directions: ${shop.name}`}
+      >
+        <div className="directions-sheet-content">
+          <p className="shop-sheet-address">
+            <Icon name="pin" size={16} aria-hidden="true" />
+            <span>{shop.address}</span>
+          </p>
+          {directionsOpen && <ShopMap shop={shop} />}
+        </div>
+      </Sheet>
 
-      <div className="shop-offer">
-        <strong>{shop.offer}</strong>
-        <span>Minimum order ₹{shop.min}</span>
+      {/* Sticky category tabs */}
+      <div
+        className="shop-sticky-tabs"
+        role="tablist"
+        aria-label="Product categories"
+      >
+        <div className="shop-tabs-scroll">
+          {categories.map((cat) => (
+            <Chip
+              key={cat}
+              active={selectedCategory === cat}
+              onClick={() => setSelectedCategory(cat)}
+              aria-label={`Category ${cat}`}
+              role="tab"
+            >
+              {cat}
+            </Chip>
+          ))}
+        </div>
       </div>
 
-      <div className="category-tabs" role="tablist" aria-label="Product categories">
-        {categories.map((cat) => (
-          <Chip
-            key={cat}
-            active={selectedCategory === cat}
-            onClick={() => setSelectedCategory(cat)}
-            aria-label={`Filter by ${cat}`}
-            role="tab"
-          >
-            {cat}
-          </Chip>
-        ))}
-      </div>
-
-      <section className="screen-section">
-        <SectionTitle title="Available now" />
-        <div className="product-grid">
-          {filteredProducts.length > 0 ? (
-            filteredProducts.map((product) => (
+      {/* 2-column product grid; closed shop = ADD disabled with "Opens at h:mm" */}
+      <section className="shop-products-section">
+        {filteredProducts.length > 0 ? (
+          <div className="shop-product-grid">
+            {filteredProducts.map((product) => (
               <ProductCard
                 key={product.id}
                 product={product}
@@ -92,16 +163,22 @@ export function ShopDetailsScreen() {
                 onAdd={() => addItem(product.id)}
                 onRemove={() => removeItem(product.id)}
                 onOpen={() => navigate(`/product/${product.id}`)}
+                disabled={!isOpen}
+                disabledLabel={!isOpen ? `Opens at ${shop.opensAt}` : undefined}
               />
-            ))
-          ) : (
-            <p style={{ gridColumn: "1 / -1", color: "var(--text-2)", padding: "var(--sp-4) 0" }}>
-              No products available in this category for {shop.name}.
-            </p>
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <EmptyState
+            icon={<Icon name="bag" size={32} />}
+            title="No items found"
+            body={`There are currently no products available in "${selectedCategory}" from ${shop.name}.`}
+            actionLabel="View all products"
+            onAction={() => setSelectedCategory("All")}
+          />
+        )}
       </section>
-    </>
+    </div>
   )
 }
 

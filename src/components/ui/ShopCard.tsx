@@ -28,9 +28,9 @@ export function ShopCard({
   return (
     <button
       type="button"
-      className={`shop-card ${compact ? "compact" : ""} ${className}`}
+      className={`shop-card ${compact ? "compact" : ""} ${!open ? "is-closed" : ""} ${className}`.trim()}
       onClick={onOpen}
-      aria-label={`Open shop ${shop.name}, ${shop.type}, rating ${shop.rating}, ETA ${shop.eta}`}
+      aria-label={`Open shop ${shop.name}, ${shop.type}, rating ${shop.rating}, ETA ${shop.eta}${!open ? `, closed, opens at ${shop.opensAt}` : ""}`}
     >
       <div className="shop-photo">
         <img

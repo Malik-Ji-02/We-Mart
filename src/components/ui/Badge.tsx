@@ -41,7 +41,7 @@ export function Badge({
   if (variant === "closed") {
     return (
       <span className={classes}>
-        <span>{children || (opensAt ? `Closed, opens ${opensAt}` : "Closed")}</span>
+        <span>{children || (opensAt ? `Opens at ${opensAt}` : "Closed")}</span>
       </span>
     )
   }

@@ -14,6 +14,8 @@ export interface ProductCardProps {
   onRemove: () => void
   onOpen: () => void
   outOfStock?: boolean
+  disabled?: boolean
+  disabledLabel?: string
 }
 
 export function ProductCard({
@@ -23,6 +25,8 @@ export function ProductCard({
   onRemove,
   onOpen,
   outOfStock = false,
+  disabled = false,
+  disabledLabel,
 }: ProductCardProps) {
   const shop = getShopById(product.shop)
   const discount = calculateDiscount(product.price, product.mrp)
@@ -31,7 +35,7 @@ export function ProductCard({
 
   const cardClasses = [
     "product-card",
-    isOutOfStock ? "is-out-of-stock" : "",
+    isOutOfStock || disabled ? "is-out-of-stock" : "",
     isInCart ? "is-in-cart" : "",
   ]
     .filter(Boolean)
@@ -74,6 +78,8 @@ export function ProductCard({
           onIncrement={onAdd}
           onDecrement={onRemove}
           outOfStock={isOutOfStock}
+          disabled={disabled}
+          disabledLabel={disabledLabel}
           productName={product.name}
         />
       </div>

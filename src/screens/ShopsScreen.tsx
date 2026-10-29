@@ -4,6 +4,7 @@ import { Icon } from "../icons/Icon"
 import { ShopCard } from "../components/ShopCard"
 import { Chip, EmptyState } from "../components/ui"
 import { getShops } from "../data/shops"
+import { isShopOpen } from "../lib/format"
 
 export function ShopsScreen() {
   const navigate = useNavigate()
@@ -16,7 +17,7 @@ export function ShopsScreen() {
   const hasAnyFilter = under30Only || freeDeliveryOnly || topRatedOnly
 
   const filteredShops = useMemo(() => {
-    return allShops.filter((shop) => {
+    const list = allShops.filter((shop) => {
       if (under30Only && (shop.eta.includes("35") || shop.eta.includes("40"))) {
         return false
       }
@@ -27,6 +28,15 @@ export function ShopsScreen() {
         return false
       }
       return true
+    })
+
+    // Closed shops sorted last per design system rules
+    return [...list].sort((a, b) => {
+      const aOpen = isShopOpen(a)
+      const bOpen = isShopOpen(b)
+      if (aOpen && !bOpen) return -1
+      if (!aOpen && bOpen) return 1
+      return 0
     })
   }, [allShops, under30Only, freeDeliveryOnly, topRatedOnly])
 

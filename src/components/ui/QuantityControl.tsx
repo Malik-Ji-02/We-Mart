@@ -8,6 +8,8 @@ export interface QuantityControlProps {
   onDecrement: () => void
   max?: number
   outOfStock?: boolean
+  disabled?: boolean
+  disabledLabel?: string
   className?: string
   productName?: string
 }
@@ -19,18 +21,21 @@ export function QuantityControl({
   onDecrement,
   max = 10,
   outOfStock = false,
+  disabled = false,
+  disabledLabel,
   className = "",
   productName = "item",
 }: QuantityControlProps) {
-  if (outOfStock) {
+  if (outOfStock || disabled) {
+    const label = disabledLabel || (outOfStock ? "Out of stock" : "ADD")
     return (
       <div className={`ui-quantity-control ${className}`}>
         <button
           className="ui-add-btn"
           disabled
-          aria-label={`${productName} is out of stock`}
+          aria-label={`${productName} is currently unavailable (${label})`}
         >
-          Out of stock
+          {label}
         </button>
       </div>
     )
