@@ -54,6 +54,18 @@ const tokens = {
   onAccent: "#4b3800",
   onPrimary: "#ffffff",
   mintOnDarkGreen: "#d7f0dc",
+  shopTint1: "#e8f5e9",
+  onShopTint1: "#086b18",
+  shopTint2: "#fef3c7",
+  onShopTint2: "#78350f",
+  shopTint3: "#e0f2fe",
+  onShopTint3: "#075985",
+  shopTint4: "#f3e8ff",
+  onShopTint4: "#6b21a8",
+  shopTint5: "#ffe4e6",
+  onShopTint5: "#9f1239",
+  shopTint6: "#ccfbf1",
+  onShopTint6: "#115e59",
 }
 
 // Color pairs to test
@@ -79,6 +91,12 @@ const pairs = [
   { fg: "primary", bg: "background", required: 4.5, role: "Primary green link/button text on white" },
   { fg: "primaryDark", bg: "primary10", required: 4.5, role: "Primary dark on primary-10 background" },
   { fg: "successIcon", bg: "background", required: 3.0, role: "Rating star icon on white (UI icon standard)" },
+  { fg: "onShopTint1", bg: "shopTint1", required: 4.5, role: "Shop avatar tint 1 (green)" },
+  { fg: "onShopTint2", bg: "shopTint2", required: 4.5, role: "Shop avatar tint 2 (amber)" },
+  { fg: "onShopTint3", bg: "shopTint3", required: 4.5, role: "Shop avatar tint 3 (sky)" },
+  { fg: "onShopTint4", bg: "shopTint4", required: 4.5, role: "Shop avatar tint 4 (purple)" },
+  { fg: "onShopTint5", bg: "shopTint5", required: 4.5, role: "Shop avatar tint 5 (rose)" },
+  { fg: "onShopTint6", bg: "shopTint6", required: 4.5, role: "Shop avatar tint 6 (teal)" },
 ]
 
 console.log("==========================================================================================")

@@ -17,6 +17,12 @@ import {
   EmptyState,
   Skeleton,
   SectionHeader,
+  ShopAvatar,
+  ProgressBar,
+  StatusTimeline,
+  BillRow,
+  AddressRow,
+  PaymentOption,
 } from "../components/ui"
 import { Icon } from "../icons/Icon"
 import { IconName, Product, Shop } from "../types"
@@ -100,6 +106,12 @@ const colorTokens = [
   { name: "--accent-soft", role: "Soft Banner Tint" },
   { name: "--on-accent", role: "High Contrast Text on Yellow" },
   { name: "--on-primary", role: "White Text on Primary" },
+  { name: "--shop-tint-1", role: "Shop Avatar Tint 1 (Green)" },
+  { name: "--shop-tint-2", role: "Shop Avatar Tint 2 (Amber)" },
+  { name: "--shop-tint-3", role: "Shop Avatar Tint 3 (Sky)" },
+  { name: "--shop-tint-4", role: "Shop Avatar Tint 4 (Purple)" },
+  { name: "--shop-tint-5", role: "Shop Avatar Tint 5 (Rose)" },
+  { name: "--shop-tint-6", role: "Shop Avatar Tint 6 (Teal)" },
   { name: "--map-land", role: "TEMP Fake Map Land" },
   { name: "--map-road", role: "TEMP Fake Map Road" },
 ]
@@ -117,6 +129,12 @@ const contrastPairs = [
   { fg: "--success", bg: "--background", ratio: "5.45:1", req: "4.5:1", role: "Success text on white" },
   { fg: "--warning", bg: "--background", ratio: "5.02:1", req: "4.5:1", role: "Warning text on white" },
   { fg: "--success-icon", bg: "--background", ratio: "3.10:1", req: "3.0:1", role: "Rating star icon on white" },
+  { fg: "--on-shop-tint-1", bg: "--shop-tint-1", ratio: "5.97:1", req: "4.5:1", role: "Shop avatar tint 1 (green)" },
+  { fg: "--on-shop-tint-2", bg: "--shop-tint-2", ratio: "8.15:1", req: "4.5:1", role: "Shop avatar tint 2 (amber)" },
+  { fg: "--on-shop-tint-3", bg: "--shop-tint-3", ratio: "6.59:1", req: "4.5:1", role: "Shop avatar tint 3 (sky)" },
+  { fg: "--on-shop-tint-4", bg: "--shop-tint-4", ratio: "7.39:1", req: "4.5:1", role: "Shop avatar tint 4 (purple)" },
+  { fg: "--on-shop-tint-5", bg: "--shop-tint-5", ratio: "6.68:1", req: "4.5:1", role: "Shop avatar tint 5 (rose)" },
+  { fg: "--on-shop-tint-6", bg: "--shop-tint-6", ratio: "6.73:1", req: "4.5:1", role: "Shop avatar tint 6 (teal)" },
 ]
 
 const iconList: IconName[] = [
@@ -142,6 +160,7 @@ export function DesignSystemGallery() {
   const [qty, setQty] = useState(2)
   const [chipActive, setChipActive] = useState("all")
   const [sheetOpen, setSheetOpen] = useState(false)
+  const [selectedPayment, setSelectedPayment] = useState("upi")
   const [computedColors] = useState<Record<string, string>>(getInitialTokenColors)
 
   return (
@@ -643,6 +662,113 @@ export function DesignSystemGallery() {
         <SectionHeader title="13. Bottom Navigation (5 Tabs, 56px+ tap height)" />
         <div style={{ position: "relative", height: 76, border: "1px solid var(--border)", borderRadius: "var(--r-md)", overflow: "hidden" }}>
           <BottomNav />
+        </div>
+      </section>
+
+      {/* 14. Phase 3 Shared Pieces */}
+      <section style={{ marginBottom: "var(--sp-6)" }}>
+        <SectionHeader title="14. Phase 3 Shared Components" />
+
+        {/* ShopAvatar sizes & tints */}
+        <div style={{ marginBottom: "var(--sp-4)" }}>
+          <small style={{ display: "block", color: "var(--text-2)", marginBottom: "var(--sp-2)", fontWeight: "var(--fw-semibold)" }}>
+            ShopAvatar (Sizes: sm, md, lg and Tints 1-6)
+          </small>
+          <div style={{ display: "flex", gap: "var(--sp-3)", alignItems: "center", flexWrap: "wrap", marginBottom: "var(--sp-3)" }}>
+            <ShopAvatar name="Sharma General Store" size="sm" tint={1} />
+            <ShopAvatar name="Fresh Basket" size="md" tint={2} />
+            <ShopAvatar name="Iyengar's Bakery" size="lg" tint={3} />
+            <ShopAvatar name="Apollo Pharmacy" size="md" tint={4} />
+            <ShopAvatar name="Karnataka Fruits" size="md" tint={5} />
+            <ShopAvatar name="Quick Kirana" size="md" tint={6} />
+          </div>
+        </div>
+
+        {/* ProgressBar */}
+        <div style={{ marginBottom: "var(--sp-4)" }}>
+          <small style={{ display: "block", color: "var(--text-2)", marginBottom: "var(--sp-2)", fontWeight: "var(--fw-semibold)" }}>
+            ProgressBar (Free delivery threshold)
+          </small>
+          <div style={{ border: "1px solid var(--border)", borderRadius: "var(--r-md)", padding: "var(--sp-3)", background: "var(--background)" }}>
+            <ProgressBar value={149} max={199} label="Add ₹50 more for free delivery" subtitle="₹149 / ₹199" />
+          </div>
+        </div>
+
+        {/* StatusTimeline */}
+        <div style={{ marginBottom: "var(--sp-4)" }}>
+          <small style={{ display: "block", color: "var(--text-2)", marginBottom: "var(--sp-2)", fontWeight: "var(--fw-semibold)" }}>
+            StatusTimeline (4-step vertical stepper)
+          </small>
+          <div style={{ border: "1px solid var(--border)", borderRadius: "var(--r-md)", padding: "var(--sp-4)", background: "var(--background)" }}>
+            <StatusTimeline
+              steps={[
+                { title: "Order confirmed", subtitle: "Sent to Sharma General Store", status: "completed", time: "18:42" },
+                { title: "Items packed", subtitle: "Kirana partner has packed 4 items", status: "completed", time: "18:48" },
+                { title: "Out for delivery", subtitle: "Rider assigned · 1.2 km away", status: "current", time: "18:52" },
+                { title: "Delivered", subtitle: "Estimated by 19:05", status: "upcoming" },
+              ]}
+            />
+          </div>
+        </div>
+
+        {/* BillRow */}
+        <div style={{ marginBottom: "var(--sp-4)" }}>
+          <small style={{ display: "block", color: "var(--text-2)", marginBottom: "var(--sp-2)", fontWeight: "var(--fw-semibold)" }}>
+            BillRow (Breakdown & totals)
+          </small>
+          <div style={{ border: "1px solid var(--border)", borderRadius: "var(--r-md)", padding: "var(--sp-3)", background: "var(--background)" }}>
+            <BillRow label="Item total" value="₹342" strikethrough="₹390" />
+            <BillRow label="Delivery partner fee" value="₹15" />
+            <BillRow label="Shop offer discount" value="-₹48" variant="discount" />
+            <BillRow label="To pay" value="₹309" variant="total" />
+          </div>
+        </div>
+
+        {/* AddressRow */}
+        <div style={{ marginBottom: "var(--sp-4)" }}>
+          <small style={{ display: "block", color: "var(--text-2)", marginBottom: "var(--sp-2)", fontWeight: "var(--fw-semibold)" }}>
+            AddressRow
+          </small>
+          <AddressRow
+            label="Home"
+            address="5th Block, Koramangala, Bengaluru"
+            eta="18–25 min"
+            onChange={() => {}}
+          />
+        </div>
+
+        {/* PaymentOption */}
+        <div style={{ marginBottom: "var(--sp-4)" }}>
+          <small style={{ display: "block", color: "var(--text-2)", marginBottom: "var(--sp-2)", fontWeight: "var(--fw-semibold)" }}>
+            PaymentOption (Radio rows with non-color cue)
+          </small>
+          <div style={{ display: "grid", gap: "var(--sp-2)" }}>
+            <PaymentOption
+              id="pay-upi"
+              label="UPI (Google Pay, PhonePe, Paytm)"
+              description="Instant refund directly to account"
+              iconName="upi"
+              badge="Fastest"
+              selected={selectedPayment === "upi"}
+              onSelect={() => setSelectedPayment("upi")}
+            />
+            <PaymentOption
+              id="pay-card"
+              label="Credit / Debit Card"
+              description="Visa, Mastercard, RuPay"
+              iconName="card"
+              selected={selectedPayment === "card"}
+              onSelect={() => setSelectedPayment("card")}
+            />
+            <PaymentOption
+              id="pay-cash"
+              label="Cash on Delivery"
+              description="Pay cash or UPI at doorstep"
+              iconName="cash"
+              selected={selectedPayment === "cash"}
+              onSelect={() => setSelectedPayment("cash")}
+            />
+          </div>
         </div>
       </section>
     </div>

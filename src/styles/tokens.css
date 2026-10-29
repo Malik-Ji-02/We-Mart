@@ -32,6 +32,20 @@
   /* On-Color Tokens */
   --on-primary: #ffffff; /* text on --primary or --primary-dark */
 
+  /* Shop Tint Tokens for ShopAvatar (passes >= 4.5:1 with on-shop-tint) */
+  --shop-tint-1: #e8f5e9;
+  --on-shop-tint-1: #086b18;
+  --shop-tint-2: #fef3c7;
+  --on-shop-tint-2: #78350f;
+  --shop-tint-3: #e0f2fe;
+  --on-shop-tint-3: #075985;
+  --shop-tint-4: #f3e8ff;
+  --on-shop-tint-4: #6b21a8;
+  --shop-tint-5: #ffe4e6;
+  --on-shop-tint-5: #9f1239;
+  --shop-tint-6: #ccfbf1;
+  --on-shop-tint-6: #115e59;
+
   /* TEMP: removed in Phase 4 (Fake tracking map only) */
   --map-land: #e8ebe5;
   --map-road: #d7dbd4;
