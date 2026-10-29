@@ -4,6 +4,7 @@ import "./ui.css"
 export interface SectionHeaderProps {
   title: string
   actionText?: string
+  actionLabel?: string
   onAction?: () => void
   className?: string
 }
@@ -11,20 +12,23 @@ export interface SectionHeaderProps {
 export function SectionHeader({
   title,
   actionText,
+  actionLabel,
   onAction,
   className = "",
 }: SectionHeaderProps) {
+  const label = actionLabel || actionText
+
   return (
     <div className={`ui-section-header ${className}`}>
       <h2>{title}</h2>
-      {actionText && onAction && (
+      {label && onAction && (
         <button
           type="button"
           className="ui-section-header-action"
           onClick={onAction}
-          aria-label={`${actionText} for ${title}`}
+          aria-label={`${label} for ${title}`}
         >
-          {actionText}
+          {label}
         </button>
       )}
     </div>

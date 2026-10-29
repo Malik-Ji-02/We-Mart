@@ -3,28 +3,34 @@ import { Icon } from "../../icons/Icon"
 import "./ui.css"
 
 export interface SearchBarProps {
-  value: string
-  onChange: (value: string) => void
+  value?: string
+  onChange?: (value: string) => void
   onClear?: () => void
   placeholder?: string
   autoFocus?: boolean
   className?: string
   onSubmit?: () => void
+  onFocus?: () => void
+  onClick?: () => void
+  readOnly?: boolean
 }
 
 export function SearchBar({
-  value,
+  value = "",
   onChange,
   onClear,
   placeholder = "Search items, shops, or categories...",
   autoFocus = false,
   className = "",
   onSubmit,
+  onFocus,
+  onClick,
+  readOnly = false,
 }: SearchBarProps) {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleClear = () => {
-    onChange("")
+    onChange?.("")
     if (onClear) onClear()
     inputRef.current?.focus()
   }
@@ -44,8 +50,11 @@ export function SearchBar({
         ref={inputRef}
         type="search"
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => onChange?.(e.target.value)}
         onKeyDown={handleKeyDown}
+        onFocus={onFocus}
+        onClick={onClick}
+        readOnly={readOnly}
         placeholder={placeholder}
         autoFocus={autoFocus}
         aria-label="Search"

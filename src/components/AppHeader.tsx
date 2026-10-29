@@ -1,8 +1,9 @@
-import React from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import { Icon } from "../icons/Icon"
 import { useLocation as useAppLocation } from "../state/LocationContext"
 import { useUI } from "../state/UIContext"
+import { currentUser } from "../data/user"
+import { IconButton } from "./ui/IconButton"
 
 interface AppHeaderProps {
   title?: string
@@ -44,68 +45,73 @@ export function AppHeader({
   return (
     <header className="app-header">
       {isHome ? (
-        <div className="delivery-row">
+        <div className="home-compact-header">
           <button
-            className="address-button"
+            className="address-button-compact"
             onClick={openLocationGate}
-            aria-label="Change delivery location"
+            aria-label={`Delivery location: ${locationName}, delivery in 20 minutes. Tap to change.`}
           >
-            <span className="brand-mark" aria-hidden="true">
-              <Icon name="store" size={20} />
+            <span className="brand-mark-compact" aria-hidden="true">
+              <Icon name="pin" size={18} />
             </span>
-            <span>
-              <small>Delivery in 20 minutes</small>
-              <strong>{locationName}</strong>
+            <span className="address-single-line">
+              <strong className="address-name">{locationName}</strong>
+              <span className="address-sep">·</span>
+              <span className="address-eta">20 min</span>
             </span>
             <Icon name="chevron" size={14} />
           </button>
-          <button
-            className="icon-button"
-            aria-label="Notifications"
-            onClick={() =>
-              openComingSoon(
-                "Notifications",
-                "Order alerts and hyperlocal store offers will appear here soon.",
-              )
-            }
-          >
-            <Icon name="bell" />
-          </button>
+          <div className="header-actions">
+            <IconButton
+              aria-label="Notifications"
+              onClick={() =>
+                openComingSoon(
+                  "Notifications",
+                  "Order alerts and hyperlocal store offers will appear here soon.",
+                )
+              }
+            >
+              <Icon name="bell" />
+            </IconButton>
+            <button
+              className="header-avatar-btn"
+              onClick={() => navigate("/account")}
+              aria-label="Account profile"
+            >
+              {currentUser.avatar}
+            </button>
+          </div>
         </div>
       ) : (
         <div className="title-row">
           {showBack && (
-            <button
-              className="icon-button"
+            <IconButton
               aria-label="Go back"
               onClick={() => navigate(-1)}
             >
               <Icon name="back" />
-            </button>
+            </IconButton>
           )}
           <h1>{displayTitle}</h1>
           {!isSearch && (
-            <button
-              className="icon-button"
+            <IconButton
               aria-label="Search"
               onClick={() => navigate("/search")}
             >
               <Icon name="search" />
-            </button>
+            </IconButton>
           )}
         </div>
       )}
 
-      {(isHome || isSearch) && (
+      {isSearch && (
         <label className="search-bar">
           <Icon name="search" />
           <input
             value={searchQuery}
-            onFocus={() => {
-              if (isHome) navigate("/search")
-            }}
             onChange={(e) => onSearchChange?.(e.target.value)}
             placeholder="Search milk, atta or a local shop"
+            autoFocus
           />
           <span aria-hidden="true" style={{ display: "grid", placeItems: "center" }}>
             <Icon name="mic" />
